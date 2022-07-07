@@ -49,6 +49,7 @@
                     <Column editable="true" title="Title 4" type="java.lang.Object"/>
                   </Table>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
                 <Property name="columnSelectionAllowed" type="boolean" value="true"/>
               </Properties>
               <AccessibilityProperties>

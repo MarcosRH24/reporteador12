@@ -8,13 +8,11 @@ import com.sicar.reporteador.comp.NumeroLinea;
 import java.io.IOException;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public class PReporteador extends javax.swing.JPanel {
 
     
-    public TableModel modelo;
+    
     public String consultaEditor;
     public JTextField text;
 
@@ -28,10 +26,11 @@ public class PReporteador extends javax.swing.JPanel {
         scrollEditor.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         text = new JTextField();
         text.setBorder(null);
+
         Consulta c = new Consulta();
         c.ctrl_enter(editor, tabla, LTotal, labelStatus, labelResult);
-        modelo = new DefaultTableModel();
-        tabla.setModel(modelo);
+
+
 
         consultaEditor = editor.getText();
         
@@ -76,6 +75,7 @@ public class PReporteador extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabla.setToolTipText("");
         tabla.setColumnSelectionAllowed(true);
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
