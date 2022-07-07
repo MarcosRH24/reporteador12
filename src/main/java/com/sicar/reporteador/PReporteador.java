@@ -28,8 +28,7 @@ public class PReporteador extends javax.swing.JPanel {
         scrollEditor.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         text = new JTextField();
         text.setBorder(null);
-        Comando cm = new Comando();
-        cm.ctrlEnter(editor, tabla, labelStatus, labelResult);
+        
         modelo = new DefaultTableModel();
         tabla.setModel(modelo);
 

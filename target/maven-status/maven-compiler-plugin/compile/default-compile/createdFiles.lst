@@ -1,4 +1,7 @@
 com/sicar/reporteador/CambiarEncabezado$1.class
+com/sicar/reporteador/PReporteador$3.class
+com/sicar/reporteador/PReporteador.class
+com/sicar/reporteador/PReporteador$4.class
 com/sicar/reporteador/comp/NumeroLinea.class
 com/sicar/reporteador/ReporteadorService.class
 com/sicar/reporteador/CambiarEncabezado$2.class
@@ -8,6 +11,8 @@ com/sicar/reporteador/Graficador$1.class
 com/sicar/reporteador/Exporter.class
 com/sicar/reporteador/Graficador.class
 com/sicar/reporteador/Main.class
+com/sicar/reporteador/PReporteador$2.class
 com/sicar/reporteador/Total.class
 com/sicar/reporteador/CambiarEncabezado.class
+com/sicar/reporteador/PReporteador$1.class
 com/sicar/reporteador/Main$1.class
