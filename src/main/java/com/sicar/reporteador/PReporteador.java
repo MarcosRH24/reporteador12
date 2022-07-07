@@ -13,7 +13,7 @@ import javax.swing.table.TableModel;
 
 public class PReporteador extends javax.swing.JPanel {
 
-    private ReporteadorService service;
+    
     public TableModel modelo;
     public String consultaEditor;
     public JTextField text;
@@ -28,13 +28,13 @@ public class PReporteador extends javax.swing.JPanel {
         scrollEditor.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         text = new JTextField();
         text.setBorder(null);
-        Comando cm = new Comando();
-        cm.ctrlEnter(editor, tabla, labelStatus, labelResult);
+        Consulta c = new Consulta();
+        c.ctrl_enter(editor, tabla, LTotal, labelStatus, labelResult);
         modelo = new DefaultTableModel();
         tabla.setModel(modelo);
 
         consultaEditor = editor.getText();
-        //pasar.openDialog(BSumarVarias);
+        
     }
 
     /**
@@ -203,33 +203,12 @@ public class PReporteador extends javax.swing.JPanel {
 
 
     private void buttonGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGenerarActionPerformed
-        LTotal.setText("Total:");
-        if (service == null) {
-            service = new ReporteadorService();
-            if (service.connect("Localhost", "sicar", "root", "testprueba") == 1) {
-            } else {
-                JOptionPane.showMessageDialog(this, "No Conectado a la BD");
-                System.exit(0);
-            }
-        }
-        long init = System.currentTimeMillis();
-        service.build(editor.getText(), tabla);
-        EliminarColumnas ec = new EliminarColumnas();
-        ec.eliminarColumnas_Id(tabla);
-        ec.eliminarBoolean(tabla);
-        ec.eliminarSub(tabla);
-        ec.eliminarStatus(tabla);
-        Total tl = new Total();
-        tl.ObtenerTotal(tabla);
-
-        labelStatus.setText("Terminado en " + (System.currentTimeMillis() - init) + " ms");
-        for (int i = 0; i < tabla.getRowCount(); i++) {
-            labelResult.setText("Resultados " + (i + 1));
-        }
+        Consulta c = new Consulta();
+        c.consultar(editor, tabla, LTotal,labelStatus, labelResult);
     }//GEN-LAST:event_buttonGenerarActionPerformed
 
     private void bGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGraficarActionPerformed
-        Graficador.graficar(tabla, tabPane);
+        //Graficador.graficar(tabla, tabPane);
     }//GEN-LAST:event_bGraficarActionPerformed
 
     private void BExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BExportarActionPerformed
@@ -243,7 +222,7 @@ public class PReporteador extends javax.swing.JPanel {
     }//GEN-LAST:event_BExportarActionPerformed
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-
+        
     }//GEN-LAST:event_tablaMouseClicked
 
 

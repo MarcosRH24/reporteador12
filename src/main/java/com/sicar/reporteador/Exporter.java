@@ -4,7 +4,6 @@
  */
 package com.sicar.reporteador;
 
-import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,8 +11,6 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -47,19 +44,18 @@ public class Exporter {
                 for (int f = 0; f < t.getRowCount(); f++) {
                     Row fila = hoja.createRow(f);
                     for (int c = 0; c < t.getColumnCount(); c++) {
-                        if (!t.getColumnName(c).contains("_id")) {
-                            Cell celda = fila.createCell(c);
-                            
-                            if (f == 0) {
-                                if (t.getValueAt(f, c)!=null) {
-                                    if (t.getColumnName(c)!=null) {
-                                        celda.setCellValue(t.getColumnName(c));
-                                    }
+
+                        Cell celda = fila.createCell(c);
+
+                        if (f == 0) {
+                            if (t.getValueAt(f, c) != null) {
+                                if (t.getColumnName(c) != null) {
+                                    celda.setCellValue(t.getColumnName(c));
                                 }
-                                
                             }
 
-                        }                     
+                        }
+
                     }
                 }
                 int filaInicio = 1;
@@ -69,7 +65,7 @@ public class Exporter {
                     for (int c = 0; c < t.getColumnCount(); c++) {
 
                         Cell celda = fila.createCell(c);
-                        if (t.getValueAt(f, c) !=null) {
+                        if (t.getValueAt(f, c) != null) {
                             if (t.getValueAt(f, c) instanceof Double) {
                                 celda.setCellValue(Double.parseDouble(t.getValueAt(f, c).toString()));
                             } else if (t.getValueAt(f, c) instanceof Float) {
