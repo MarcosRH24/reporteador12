@@ -49,17 +49,17 @@ public class Exporter {
                     for (int c = 0; c < t.getColumnCount(); c++) {
                         if (!t.getColumnName(c).contains("_id")) {
                             Cell celda = fila.createCell(c);
-
+                            
                             if (f == 0) {
-                                celda.setCellValue(t.getColumnName(c));
+                                if (t.getValueAt(f, c)!=null) {
+                                    if (t.getColumnName(c)!=null) {
+                                        celda.setCellValue(t.getColumnName(c));
+                                    }
+                                }
+                                
                             }
 
-                        } else if (t.getColumnName(c).contains("_id")) {
-                            TableColumnModel tcm = t.getColumnModel();
-                            TableColumn columnaABorrar = tcm.getColumn(c);
-                            t.removeColumn(columnaABorrar);
-                        }
-
+                        }                     
                     }
                 }
                 int filaInicio = 1;
@@ -69,7 +69,7 @@ public class Exporter {
                     for (int c = 0; c < t.getColumnCount(); c++) {
 
                         Cell celda = fila.createCell(c);
-                        if (!(t.getValueAt(f, c) instanceof Integer)) {
+                        if (t.getValueAt(f, c) !=null) {
                             if (t.getValueAt(f, c) instanceof Double) {
                                 celda.setCellValue(Double.parseDouble(t.getValueAt(f, c).toString()));
                             } else if (t.getValueAt(f, c) instanceof Float) {

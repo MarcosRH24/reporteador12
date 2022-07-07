@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -43,26 +42,28 @@ public class ReporteadorService {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             ResultSetMetaData rsm = rs.getMetaData();
+
             DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+
             //limpiar tabla
             modelo.setColumnCount(0);
             modelo.setRowCount(0);
 
             //agregar las columnas del resultado con su nombre
             for (int k = 1; k <= rsm.getColumnCount(); k++) {
-               
-                modelo.addColumn( rsm.getColumnName(k)/*.toUpperCase()*/);
+
+                modelo.addColumn(rsm.getColumnName(k)/*.toUpperCase()*/);
 
             }
 
             //agregar renglones con los datos
             int renglon = 0;
             while (rs.next()) {
+
                 modelo.insertRow(renglon, new String[rsm.getColumnCount()]);
                 for (int k = 1; k <= rsm.getColumnCount(); k++) {
-                    //if (!rsm.getColumnName(k).contains("_id")) {
-                        modelo.setValueAt(rs.getObject(k), renglon, k - 1);
-                   // }
+                    modelo.setValueAt(rs.getObject(k), renglon, k - 1);
+                   
 
                 }
                 renglon++;
@@ -71,7 +72,7 @@ public class ReporteadorService {
             for (int i = 1; i < rsm.getColumnCount() + 1; i++) {
 
                 TableColumn column = table.getColumnModel().getColumn(i - 1);
-
+ 
                 if (java.sql.Types.TIMESTAMP == rsm.getColumnType(i)) {
 
                     column.setPreferredWidth(200);
@@ -79,7 +80,7 @@ public class ReporteadorService {
                     column.setWidth(200);
 
                 } else {
-                    //JOptionPane.showMessageDialog(null, rsm.getColumnTypeName(i));
+                    
                     column.setMinWidth(100);
                     column.setPreferredWidth(100);
                     column.setWidth(100);

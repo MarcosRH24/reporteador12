@@ -4,7 +4,6 @@
  */
 package com.sicar.reporteador;
 
-
 import com.sicar.reporteador.comp.NumeroLinea;
 import java.io.IOException;
 
@@ -13,15 +12,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 public class PReporteador extends javax.swing.JPanel {
-    
+
     private ReporteadorService service;
     public TableModel modelo;
     public String consultaEditor;
     public JTextField text;
-    
+
     public PReporteador() {
         initComponents();
-        
+
         tabla.getTableHeader();
         tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         scrollEditor.setRowHeaderView(new NumeroLinea(editor));
@@ -30,10 +29,10 @@ public class PReporteador extends javax.swing.JPanel {
         text = new JTextField();
         text.setBorder(null);
         Comando cm = new Comando();
-        cm.ctrlEnter(editor, tabla, labelStatus, labelResult,LTotal);
+        cm.ctrlEnter(editor, tabla, labelStatus, labelResult);
         modelo = new DefaultTableModel();
         tabla.setModel(modelo);
-        
+
         consultaEditor = editor.getText();
         //pasar.openDialog(BSumarVarias);
     }
@@ -204,7 +203,7 @@ public class PReporteador extends javax.swing.JPanel {
 
 
     private void buttonGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGenerarActionPerformed
-        
+        LTotal.setText("Total:");
         if (service == null) {
             service = new ReporteadorService();
             if (service.connect("Localhost", "sicar", "root", "testprueba") == 1) {
@@ -217,14 +216,12 @@ public class PReporteador extends javax.swing.JPanel {
         service.build(editor.getText(), tabla);
         EliminarColumnas ec = new EliminarColumnas();
         ec.eliminarColumnas_Id(tabla);
-        ec.eliminarColumnasNulas(tabla);
-        for (int i = 0; i < tabla.getColumnCount(); i++) {
-            if (tabla.getColumnName(i).equalsIgnoreCase("Total")) {
-                Total tl = new Total();
-                tl.ObtenerTotal(tabla,LTotal);
-            }
-        }
-        
+        ec.eliminarBoolean(tabla);
+        ec.eliminarSub(tabla);
+        ec.eliminarStatus(tabla);
+        Total tl = new Total();
+        tl.ObtenerTotal(tabla);
+
         labelStatus.setText("Terminado en " + (System.currentTimeMillis() - init) + " ms");
         for (int i = 0; i < tabla.getRowCount(); i++) {
             labelResult.setText("Resultados " + (i + 1));
@@ -246,7 +243,7 @@ public class PReporteador extends javax.swing.JPanel {
     }//GEN-LAST:event_BExportarActionPerformed
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-        
+
     }//GEN-LAST:event_tablaMouseClicked
 
 

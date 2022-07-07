@@ -28,20 +28,70 @@ public class EliminarColumnas {
         }
     }
 
-    public void eliminarColumnasNulas(JTable tabla) {
+    public void eliminarSub(JTable tabla) {
         for (int i = 0; i < tabla.getRowCount(); i++) {
             for (int j = 0; j < tabla.getColumnCount(); j++) {
-                TableColumnModel tcm = tabla.getColumnModel();
-                TableColumn columnaABorrar = tcm.getColumn(j);
-
-                if (columnaABorrar.equals("null")) {
+                if (tabla.getColumnName(j).contains("sub")) {
                     tabla.removeColumn(tabla.getColumnModel().getColumn(j));
-                    
+                }
+
+            }
+        }
+    }
+
+    public void eliminarStatus(JTable tabla) {
+        for (int i = 0; i < tabla.getRowCount(); i++) {
+            for (int j = 0; j < tabla.getColumnCount(); j++) {
+                if (tabla.getColumnName(j).contains("status") || tabla.getColumnName(j).contains("Status")) {
+                    tabla.removeColumn(tabla.getColumnModel().getColumn(j));
+                }
+
+            }
+        }
+    }
+//
+//    public void eliminarColumnasNulas(JTable tabla) {
+//        for (int i = 0; i < tabla.getRowCount(); i++) {
+//            for (int j = 0; j < tabla.getColumnCount(); j++) {
+//                //TableColumnModel tcm = tabla.getColumnModel();
+//                //TableColumn columnaABorrar = tcm.getColumn(j);
+//                
+//                if (tabla.getValueAt(i, j)==null) {
+//                    tabla.removeColumn(tabla.getColumnModel().getColumn(j));
+//                }
+//                
+//                    
+//
+//                
+//
+//            }
+//        }
+//
+//    }
+
+    public void eliminarFilasVacias(JTable table) {
+        for (int i = 1; i < table.getColumnCount(); i++) {
+            for (int j = 0; j < table.getRowCount(); j++) {
+
+                TableColumn t = table.getColumnModel().getColumn(i);
+                if (t.getCellRenderer().equals("null")) {
+                    table.removeColumn(table.getColumnModel().getColumn(j));
                 }
 
             }
         }
 
+    }
+
+    public void eliminarBoolean(JTable tabla) {
+        for (int i = 1; i < tabla.getColumnCount(); i++) {
+            for (int j = 0; j < tabla.getRowCount(); j++) {
+                if (tabla.getValueAt(j, i) instanceof Boolean) {
+                    tabla.removeColumn(tabla.getColumnModel().getColumn(i));
+                }
+            }
+
+        }
     }
 
 }
