@@ -5,10 +5,12 @@
 package com.sicar.reporteador;
 
 import java.awt.event.KeyEvent;
+import java.util.LinkedList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -30,11 +32,14 @@ public class Consulta {
         }
         long init = System.currentTimeMillis();
         service.build(editor.getText(), tabla);
+        QuitarCamelCase qcc= new QuitarCamelCase();
+        qcc.delCamelCase(tabla);
         EliminarColumnas ec = new EliminarColumnas();
         ec.eliminarColumnas(tabla);
+        
         Total tl = new Total();
         tl.ObtenerTotal(tabla);
-
+        
         labelStatus.setText("Terminado en " + (System.currentTimeMillis() - init) + " ms");
         for (int i = 0; i < tabla.getRowCount(); i++) {
             labelResult.setText("Resultados " + (i + 1));
@@ -55,4 +60,8 @@ public class Consulta {
         });
 
     }
+
+    
+
+    
 }

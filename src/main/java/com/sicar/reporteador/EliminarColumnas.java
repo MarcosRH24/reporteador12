@@ -5,13 +5,16 @@
 package com.sicar.reporteador;
 
 import javax.swing.JTable;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
  * @author marcos
  */
 public class EliminarColumnas {
-    
+
     public void eliminarColumnas(JTable tabla) {
         //id
         for (int i = 0; i < tabla.getRowCount(); i++) {
@@ -19,7 +22,7 @@ public class EliminarColumnas {
                 if (tabla.getColumnName(j).contains("_id")) {
                     tabla.removeColumn(tabla.getColumnModel().getColumn(j));
                 }
-                
+
             }
         }
         //sub
@@ -28,7 +31,7 @@ public class EliminarColumnas {
                 if (tabla.getColumnName(j).contains("sub")) {
                     tabla.removeColumn(tabla.getColumnModel().getColumn(j));
                 }
-                
+
             }
         }
         //status
@@ -37,7 +40,7 @@ public class EliminarColumnas {
                 if (tabla.getColumnName(j).contains("status") || tabla.getColumnName(j).contains("Status")) {
                     tabla.removeColumn(tabla.getColumnModel().getColumn(j));
                 }
-                
+
             }
         }
         //columnas nulas
@@ -49,7 +52,7 @@ public class EliminarColumnas {
                         tabla.removeColumn(tabla.getColumnModel().getColumn(j));
                     }
                 }
-                
+
             }
         }
         //boolean
@@ -60,5 +63,24 @@ public class EliminarColumnas {
                 }
             }
         }
+    }
+    
+
+
+
+    public void quitarCamelCase(JTable t, JTableHeader header) {
+        for (int i = 0; i < t.getColumnCount(); i++) {
+            for (int j = 0; j < t.getRowCount(); j++) {
+                t.getValueAt(i, j);
+                header = t.getTableHeader();
+                TableColumnModel tableColumnModel = header.getColumnModel();
+                TableColumn tableColumn = tableColumnModel.getColumn(i);
+                for (String w : "camelValue".split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])")) {
+                    tableColumn.setHeaderValue(w);
+                    header.repaint();
+                }
+            }
+        }
+
     }
 }
