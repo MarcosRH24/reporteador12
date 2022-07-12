@@ -30,7 +30,6 @@ public class QuitarCamelCase {
 
         }
     }
-
     public static String quitarCamelCase(String s) {
         return s.replaceAll(
                 String.format("%s|%s|%s",
@@ -48,12 +47,4 @@ public class QuitarCamelCase {
         tabCM.setHeaderValue(name);
         t.repaint();
     }
-
-//    public static LinkedList<String> splitCamelCaseString(String s) {
-//        LinkedList<String> result = new LinkedList<String>();
-//        for (String w : s.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])")) {
-//            result.add(w);
-//        }
-//        return result;
-//    }
 }

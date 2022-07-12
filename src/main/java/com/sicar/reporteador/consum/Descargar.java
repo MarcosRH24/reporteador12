@@ -1,6 +1,9 @@
 package com.sicar.reporteador.consum;
 
 import java.awt.event.ActionEvent;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
@@ -12,14 +15,33 @@ import javax.swing.JTextArea;
  */
 public class Descargar {
 
-    public void descargar(JButton boton, JTextArea text) {
-        boton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                HttpClientApp cli = new HttpClientApp();
-                cli.consumir(text);
+    public String consumir() {
+        try {
 
+            URL url = new URL("http://localhost:8080/");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+            int responseCode = conn.getResponseCode();
+            if (responseCode != 200) {
+                throw new RuntimeException("ocurrio un error: " + responseCode);
+            } else {
+                StringBuilder informationQuery = new StringBuilder();
+                Scanner scanner = new Scanner(url.openStream());
+
+                while (scanner.hasNext()) {
+                    informationQuery.append(scanner.nextLine());
+                }
+                scanner.close();
+                String st = informationQuery.toString();
+                
+                return st;
             }
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 }

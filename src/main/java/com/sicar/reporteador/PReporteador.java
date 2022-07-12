@@ -6,14 +6,19 @@ package com.sicar.reporteador;
 
 import com.sicar.reporteador.comp.NumeroLinea;
 import com.sicar.reporteador.consum.Descargar;
+import com.sicar.reporteador.consum.Downloader;
+
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import javax.swing.*;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 public class PReporteador extends javax.swing.JPanel {
 
-    
-    
+    private ReporteadorService service;
     public String consultaEditor;
     public JTextField text;
 
@@ -29,14 +34,12 @@ public class PReporteador extends javax.swing.JPanel {
         text.setBorder(null);
 
         Consulta c = new Consulta();
-        c.ctrl_enter(editor, tabla, LTotal, labelStatus, labelResult);
-        Descargar d = new Descargar();
-        d.descargar(BDescargar,editor);
-
-
+        //c.ctrl_enter(editor, tabla, LTotal, labelStatus, labelResult);
+        
+        
 
         consultaEditor = editor.getText();
-        
+
     }
 
     /**
@@ -123,6 +126,11 @@ public class PReporteador extends javax.swing.JPanel {
 
         BDescargar.setText("Descargar");
         BDescargar.setPreferredSize(new java.awt.Dimension(135, 25));
+        BDescargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BDescargarActionPerformed(evt);
+            }
+        });
 
         bGraficar.setText("Graficar");
         bGraficar.setPreferredSize(new java.awt.Dimension(135, 25));
@@ -206,8 +214,33 @@ public class PReporteador extends javax.swing.JPanel {
 
 
     private void buttonGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGenerarActionPerformed
-        Consulta c = new Consulta();
-        c.consultar(editor, tabla, LTotal,labelStatus, labelResult);
+        LTotal.setText("Total:");
+        if (service == null) {
+            service = new ReporteadorService();
+            if (service.connect("Localhost", "sicar", "root", "testprueba") == 1) {
+            } else {
+                JOptionPane.showMessageDialog(null, "No Conectado a la BD");
+                System.exit(0);
+            }
+        }
+        long init = System.currentTimeMillis();
+        service.build(editor.getText(), tabla);
+        eliminar_id();
+        eliminarSub();
+        eliminarColumnasNulas();
+        eliminarboolean();
+        eliminarstatus();
+
+        QuitarCamelCase qcc = new QuitarCamelCase();
+        qcc.delCamelCase(tabla);
+
+        Total tl = new Total();
+        tl.ObtenerTotal(tabla);
+
+        labelStatus.setText("Terminado en " + (System.currentTimeMillis() - init) + " ms");
+        for (int i = 0; i < tabla.getRowCount(); i++) {
+            labelResult.setText("Resultados " + (i + 1));
+        }
     }//GEN-LAST:event_buttonGenerarActionPerformed
 
     private void bGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGraficarActionPerformed
@@ -226,7 +259,15 @@ public class PReporteador extends javax.swing.JPanel {
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
         
+        
     }//GEN-LAST:event_tablaMouseClicked
+
+    private void BDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BDescargarActionPerformed
+       Downloader dow= new Downloader(null, true);
+       dow.setVisible(true);
+//        Descargar d = new Descargar();              
+//        editor.setText(d.consumir());
+    }//GEN-LAST:event_BDescargarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -247,4 +288,62 @@ public class PReporteador extends javax.swing.JPanel {
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 
+    public void eliminar_id() {
+        //id
+        for (int i = 0; i < tabla.getRowCount(); i++) {
+            for (int j = 0; j < tabla.getColumnCount(); j++) {
+                if (tabla.getColumnName(j).contains("_id")) {
+                    tabla.removeColumn(tabla.getColumnModel().getColumn(j));
+                }
+
+            }
+        }
+    }
+
+    public void eliminarSub() {
+        for (int i = 0; i < tabla.getRowCount(); i++) {
+            for (int j = 0; j < tabla.getColumnCount(); j++) {
+                if (tabla.getColumnName(j).contains("sub")) {
+                    tabla.removeColumn(tabla.getColumnModel().getColumn(j));
+                }
+
+            }
+        }
+    }
+
+    public void eliminarstatus() {
+        for (int i = 0; i < tabla.getRowCount(); i++) {
+            for (int j = 0; j < tabla.getColumnCount(); j++) {
+                if (tabla.getColumnName(j).contains("status") || tabla.getColumnName(j).contains("Status")) {
+                    tabla.removeColumn(tabla.getColumnModel().getColumn(j));
+                }
+
+            }
+        }
+    }
+
+    public void eliminarColumnasNulas() {
+        for (int i = 0; i < tabla.getRowCount(); i++) {
+            for (int j = 0; j < tabla.getColumnCount(); j++) {
+                if (!tabla.getColumnName(j).equalsIgnoreCase("total")) {
+                    if (tabla.getValueAt(i, j) == null) {
+
+                        tabla.removeColumn(tabla.getColumnModel().getColumn(j));
+                    }
+                }
+
+            }
+        }
+    }
+
+    public void eliminarboolean() {
+        for (int i = 1; i < tabla.getColumnCount(); i++) {
+            for (int j = 0; j < tabla.getRowCount(); j++) {
+                if (tabla.getValueAt(j, i) instanceof Boolean) {
+                    tabla.removeColumn(tabla.getColumnModel().getColumn(i));
+                }
+            }
+        }
+    }
+    
 }
