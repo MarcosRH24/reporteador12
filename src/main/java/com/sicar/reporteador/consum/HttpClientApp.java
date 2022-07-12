@@ -20,14 +20,14 @@ public class HttpClientApp {
             if (responseCode != 200) {
                 throw new RuntimeException("ocurrio un error: " + responseCode);
             } else {
-                StringBuilder informationString = new StringBuilder();
+                StringBuilder informationQuery = new StringBuilder();
                 Scanner scanner = new Scanner(url.openStream());
 
                 while (scanner.hasNext()) {
-                    informationString.append(scanner.nextLine());
+                    informationQuery.append(scanner.nextLine());
                 }
                 scanner.close();
-                String st = informationString.toString();
+                String st = informationQuery.toString();
                 t.setText(st);
             }
         } catch (Exception e) {
