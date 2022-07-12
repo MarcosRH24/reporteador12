@@ -5,6 +5,7 @@
 package com.sicar.reporteador;
 
 import com.sicar.reporteador.comp.NumeroLinea;
+import com.sicar.reporteador.consum.Descargar;
 import java.io.IOException;
 
 import javax.swing.*;
@@ -29,6 +30,8 @@ public class PReporteador extends javax.swing.JPanel {
 
         Consulta c = new Consulta();
         c.ctrl_enter(editor, tabla, LTotal, labelStatus, labelResult);
+        Descargar d = new Descargar();
+        d.descargar(BDescargar,editor);
 
 
 
@@ -52,7 +55,7 @@ public class PReporteador extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         buttonGenerar = new javax.swing.JButton();
         BExportar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        BDescargar = new javax.swing.JButton();
         bGraficar = new javax.swing.JButton();
         scrollEditor = new javax.swing.JScrollPane();
         editor = new javax.swing.JTextArea();
@@ -118,8 +121,8 @@ public class PReporteador extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setText("Descargar");
-        jButton2.setPreferredSize(new java.awt.Dimension(135, 25));
+        BDescargar.setText("Descargar");
+        BDescargar.setPreferredSize(new java.awt.Dimension(135, 25));
 
         bGraficar.setText("Graficar");
         bGraficar.setPreferredSize(new java.awt.Dimension(135, 25));
@@ -139,7 +142,7 @@ public class PReporteador extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BExportar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(BDescargar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bGraficar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(31, Short.MAX_VALUE))
@@ -151,7 +154,7 @@ public class PReporteador extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BExportar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BDescargar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bGraficar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -227,12 +230,12 @@ public class PReporteador extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BDescargar;
     private javax.swing.JButton BExportar;
     private javax.swing.JLabel LTotal;
     private javax.swing.JButton bGraficar;
     private javax.swing.JButton buttonGenerar;
     private javax.swing.JTextArea editor;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

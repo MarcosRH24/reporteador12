@@ -2,9 +2,11 @@
 /home/marcos/Development/reporteador12/src/main/java/com/sicar/reporteador/QuitarCamelCase.java
 /home/marcos/Development/reporteador12/src/main/java/com/sicar/reporteador/Main.java
 /home/marcos/Development/reporteador12/src/main/java/com/sicar/reporteador/EliminarColumnas.java
+/home/marcos/Development/reporteador12/src/main/java/com/sicar/reporteador/consum/HttpClientApp.java
 /home/marcos/Development/reporteador12/src/main/java/com/sicar/reporteador/ReporteadorService.java
 /home/marcos/Development/reporteador12/src/main/java/com/sicar/reporteador/PReporteador.java
 /home/marcos/Development/reporteador12/src/main/java/com/sicar/reporteador/Total.java
 /home/marcos/Development/reporteador12/src/main/java/com/sicar/reporteador/Graficador.java
 /home/marcos/Development/reporteador12/src/main/java/com/sicar/reporteador/comp/NumeroLinea.java
 /home/marcos/Development/reporteador12/src/main/java/com/sicar/reporteador/Consulta.java
+/home/marcos/Development/reporteador12/src/main/java/com/sicar/reporteador/consum/Descargar.java

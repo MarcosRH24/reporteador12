@@ -4,8 +4,6 @@
  */
 package com.sicar.reporteador;
 
-import java.util.LinkedList;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -25,7 +23,7 @@ public class QuitarCamelCase {
                 //LinkedList<String> q2=splitCamelCaseString(quitar);
                 String q2 =quitarCamelCase(quitar)/*.toUpperCase()*/;
                 changeColumnName(t, j, q2);
-                //JOptionPane.showMessageDialog(null, q2);
+                
                 
                 
             }
@@ -51,11 +49,11 @@ public class QuitarCamelCase {
         t.repaint();
     }
 
-    public static LinkedList<String> splitCamelCaseString(String s) {
-        LinkedList<String> result = new LinkedList<String>();
-        for (String w : s.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])")) {
-            result.add(w);
-        }
-        return result;
-    }
+//    public static LinkedList<String> splitCamelCaseString(String s) {
+//        LinkedList<String> result = new LinkedList<String>();
+//        for (String w : s.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])")) {
+//            result.add(w);
+//        }
+//        return result;
+//    }
 }
