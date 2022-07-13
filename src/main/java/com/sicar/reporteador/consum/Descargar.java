@@ -1,11 +1,8 @@
 package com.sicar.reporteador.consum;
 
-import java.awt.event.ActionEvent;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
 
 
 
