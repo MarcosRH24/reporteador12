@@ -1,14 +1,11 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.sicar.reporteador.consum;
+package com.sicar.reporteador;
 
-import com.sicar.reporteador.Main;
-import java.awt.Frame;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
@@ -19,17 +16,15 @@ import sicar.sutil.swing.laf.SicarLookAndFeel;
  *
  * @author marcos
  */
-public class Downloader extends javax.swing.JDialog {
+public class NewMain extends javax.swing.JFrame {
 
-    public Downloader(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    /**
+     * Creates new form NewMain
+     */
+    public NewMain() {
         initComponents();
-
         consumir();
     }
-
-    
-  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,7 +41,7 @@ public class Downloader extends javax.swing.JDialog {
         BDescargar = new javax.swing.JButton();
         BActualizar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -115,18 +110,16 @@ public class Downloader extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
-                        .addContainerGap())))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -135,16 +128,11 @@ public class Downloader extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BDescargarActionPerformed
-//        int selectRow = tabla.getSelectedRow();
-//        if (selectRow == 1) {
-//            String Query[] = new String[2];
-//            Query[0]=tabla.getValueAt(selectRow, 2).toString();
-
-//        }
+        
     }//GEN-LAST:event_BDescargarActionPerformed
 
     private void BActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BActualizarActionPerformed
-        
+
         consumir();
     }//GEN-LAST:event_BActualizarActionPerformed
 
@@ -157,30 +145,15 @@ public class Downloader extends javax.swing.JDialog {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-
         SicarLookAndFeel.install();
         //</editor-fold>
 
-
-        /* Create and display the dialog */
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Downloader dialog = new Downloader(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                new NewMain().setVisible(true);
             }
         });
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Downloader().setVisible(true);
-//            }
-//        });
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

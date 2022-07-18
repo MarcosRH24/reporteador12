@@ -1,6 +1,7 @@
 
 package com.sicar.reporteador;
 
+import com.sicar.reporteador.consum.Downloader;
 import sicar.sutil.swing.laf.SicarLookAndFeel;
 
 /**
@@ -10,9 +11,10 @@ import sicar.sutil.swing.laf.SicarLookAndFeel;
 public class Main extends javax.swing.JFrame {
 
     public Main() {
+        
         initComponents();
         setLocationRelativeTo(null);
-        setSize(850, 600);
+        setSize(700, 450);
     }
 
     /**
@@ -46,6 +48,7 @@ public class Main extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main().setVisible(true);

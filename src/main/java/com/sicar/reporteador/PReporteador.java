@@ -4,17 +4,18 @@
  */
 package com.sicar.reporteador;
 
-import com.sicar.reporteador.comp.NumeroLinea;
-import com.sicar.reporteador.consum.Descargar;
-import com.sicar.reporteador.consum.Downloader;
-
-import java.awt.event.KeyEvent;
+import com.sicar.reporteador.consum.Query;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.*;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.web.reactive.function.client.WebClient;
 
 public class PReporteador extends javax.swing.JPanel {
 
@@ -24,22 +25,13 @@ public class PReporteador extends javax.swing.JPanel {
 
     public PReporteador() {
         initComponents();
-
-        tabla.getTableHeader();
-        tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        scrollEditor.setRowHeaderView(new NumeroLinea(editor));
-        scrollEditor.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollEditor.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        consumir();
+//        invocar();
+        //tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         text = new JTextField();
         text.setBorder(null);
 
-        Consulta c = new Consulta();
-        //c.ctrl_enter(editor, tabla, LTotal, labelStatus, labelResult);
-        
-        
-
-        consultaEditor = editor.getText();
-
+        //consultaEditor = editor.getText();
     }
 
     /**
@@ -50,65 +42,29 @@ public class PReporteador extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
-        tabPane = new javax.swing.JTabbedPane();
-        scrollPane = new javax.swing.JScrollPane();
-        tabla = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         buttonGenerar = new javax.swing.JButton();
-        BExportar = new javax.swing.JButton();
-        BDescargar = new javax.swing.JButton();
-        bGraficar = new javax.swing.JButton();
-        scrollEditor = new javax.swing.JScrollPane();
-        editor = new javax.swing.JTextArea();
+        BActualizar = new javax.swing.JButton();
+        BAgregar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel4 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        labelStatus = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        labelResult = new javax.swing.JLabel();
-        LTotal = new javax.swing.JLabel();
-
-        setLayout(new java.awt.GridBagLayout());
-
-        tabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tabla.setToolTipText("");
-        tabla.setColumnSelectionAllowed(true);
-        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaMouseClicked(evt);
-            }
-        });
-        scrollPane.setViewportView(tabla);
-        tabla.getAccessibleContext().setAccessibleName("");
-
-        tabPane.addTab("Resultados", scrollPane);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.weighty = 0.1;
-        add(tabPane, gridBagConstraints);
+        LDescripcion = new javax.swing.JLabel();
+        LFecha = new javax.swing.JLabel();
+        LNombre = new javax.swing.JLabel();
+        panelPrueba = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
 
         jPanel1.setBackground(new java.awt.Color(2, 114, 181));
         jPanel1.setPreferredSize(new java.awt.Dimension(767, 55));
 
         buttonGenerar.setBackground(new java.awt.Color(0, 153, 0));
         buttonGenerar.setForeground(new java.awt.Color(255, 255, 255));
-        buttonGenerar.setText("Generar");
-        buttonGenerar.setMaximumSize(new java.awt.Dimension(120, 37));
-        buttonGenerar.setMinimumSize(new java.awt.Dimension(100, 25));
+        buttonGenerar.setText("Generar Excel");
+        buttonGenerar.setMaximumSize(null);
+        buttonGenerar.setMinimumSize(null);
         buttonGenerar.setPreferredSize(new java.awt.Dimension(135, 25));
         buttonGenerar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,27 +72,23 @@ public class PReporteador extends javax.swing.JPanel {
             }
         });
 
-        BExportar.setText("Exportar");
-        BExportar.setPreferredSize(new java.awt.Dimension(135, 25));
-        BExportar.addActionListener(new java.awt.event.ActionListener() {
+        BActualizar.setText("Actualizar");
+        BActualizar.setMaximumSize(null);
+        BActualizar.setMinimumSize(null);
+        BActualizar.setPreferredSize(new java.awt.Dimension(135, 25));
+        BActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BExportarActionPerformed(evt);
+                BActualizarActionPerformed(evt);
             }
         });
 
-        BDescargar.setText("Descargar");
-        BDescargar.setPreferredSize(new java.awt.Dimension(135, 25));
-        BDescargar.addActionListener(new java.awt.event.ActionListener() {
+        BAgregar.setText("Agregar");
+        BAgregar.setMaximumSize(null);
+        BAgregar.setMinimumSize(null);
+        BAgregar.setPreferredSize(new java.awt.Dimension(135, 25));
+        BAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BDescargarActionPerformed(evt);
-            }
-        });
-
-        bGraficar.setText("Graficar");
-        bGraficar.setPreferredSize(new java.awt.Dimension(135, 25));
-        bGraficar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bGraficarActionPerformed(evt);
+                BAgregarActionPerformed(evt);
             }
         });
 
@@ -146,14 +98,12 @@ public class PReporteador extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(buttonGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BExportar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BDescargar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bGraficar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addComponent(buttonGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,93 +111,76 @@ public class PReporteador extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BExportar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BDescargar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bGraficar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        add(jPanel1, gridBagConstraints);
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0), new java.awt.Color(255, 255, 255), new java.awt.Color(0, 0, 0)));
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
-        scrollEditor.setMinimumSize(new java.awt.Dimension(25, 100));
-        scrollEditor.setPreferredSize(new java.awt.Dimension(100, 250));
+        LDescripcion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LDescripcion.setText("Descripcion");
+        LDescripcion.setPreferredSize(new java.awt.Dimension(43, 15));
+        jPanel2.add(LDescripcion, java.awt.BorderLayout.CENTER);
 
-        editor.setColumns(20);
-        editor.setRows(5);
-        editor.setText("SELECT * FROM venta");
-        scrollEditor.setViewportView(editor);
+        LFecha.setText("Fecha");
+        jPanel2.add(LFecha, java.awt.BorderLayout.PAGE_END);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        add(scrollEditor, gridBagConstraints);
+        LNombre.setText("Nombre");
+        jPanel2.add(LNombre, java.awt.BorderLayout.PAGE_START);
 
-        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        panelPrueba.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0), new java.awt.Color(255, 255, 255), new java.awt.Color(0, 0, 0)));
+        panelPrueba.setLayout(new java.awt.BorderLayout());
 
-        labelStatus.setText("Hola :)");
-        jPanel2.add(labelStatus);
+        jScrollPane2.setViewportView(jTextPane1);
 
-        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        jPanel2.add(jPanel3);
+        panelPrueba.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        labelResult.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        labelResult.setText("Resultados:");
-        jPanel2.add(labelResult);
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(78, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(panelPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(166, Short.MAX_VALUE))
+        );
 
-        LTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        LTotal.setText("Total:");
-        jPanel2.add(LTotal);
+        jScrollPane1.setViewportView(jPanel4);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        add(jPanel2, gridBagConstraints);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+                .addContainerGap())
+        );
     }// </editor-fold>//GEN-END:initComponents
 
 
     private void buttonGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGenerarActionPerformed
-        LTotal.setText("Total:");
-        if (service == null) {
-            service = new ReporteadorService();
-            if (service.connect("Localhost", "sicar", "root", "testprueba") == 1) {
-            } else {
-                JOptionPane.showMessageDialog(null, "No Conectado a la BD");
-                System.exit(0);
-            }
-        }
-        long init = System.currentTimeMillis();
-        service.build(editor.getText(), tabla);
-        eliminar_id();
-        eliminarSub();
-        eliminarColumnasNulas();
-        eliminarboolean();
-        eliminarstatus();
-
-        QuitarCamelCase qcc = new QuitarCamelCase();
-        qcc.delCamelCase(tabla);
-
-        Total tl = new Total();
-        tl.ObtenerTotal(tabla);
-
-        labelStatus.setText("Terminado en " + (System.currentTimeMillis() - init) + " ms");
-        for (int i = 0; i < tabla.getRowCount(); i++) {
-            labelResult.setText("Resultados " + (i + 1));
-        }
-    }//GEN-LAST:event_buttonGenerarActionPerformed
-
-    private void bGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGraficarActionPerformed
-        //Graficador.graficar(tabla, tabPane);
-    }//GEN-LAST:event_bGraficarActionPerformed
-
-    private void BExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BExportarActionPerformed
         Exporter obj;
         try {
             obj = new Exporter();
@@ -255,38 +188,97 @@ public class PReporteador extends javax.swing.JPanel {
         } catch (IOException ex) {
             System.out.println("Error: " + ex);
         }
-    }//GEN-LAST:event_BExportarActionPerformed
+    }//GEN-LAST:event_buttonGenerarActionPerformed
 
-    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-        
-        
-    }//GEN-LAST:event_tablaMouseClicked
+    private void BActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BActualizarActionPerformed
+        consumir();
+    }//GEN-LAST:event_BActualizarActionPerformed
 
-    private void BDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BDescargarActionPerformed
-       Downloader dow= new Downloader(null, true);
-       dow.setVisible(true);
-//        Descargar d = new Descargar();              
-//        editor.setText(d.consumir());
-    }//GEN-LAST:event_BDescargarActionPerformed
+    private void BAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BAgregarActionPerformed
+        AgregarReporte agr = new AgregarReporte(null, true);
+        agr.setVisible(true);
+    }//GEN-LAST:event_BAgregarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BDescargar;
-    private javax.swing.JButton BExportar;
-    private javax.swing.JLabel LTotal;
-    private javax.swing.JButton bGraficar;
+    private javax.swing.JButton BActualizar;
+    private javax.swing.JButton BAgregar;
+    private javax.swing.JLabel LDescripcion;
+    private javax.swing.JLabel LFecha;
+    private javax.swing.JLabel LNombre;
     private javax.swing.JButton buttonGenerar;
-    private javax.swing.JTextArea editor;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JLabel labelResult;
-    private javax.swing.JLabel labelStatus;
-    private javax.swing.JScrollPane scrollEditor;
-    private javax.swing.JScrollPane scrollPane;
-    private javax.swing.JTabbedPane tabPane;
-    private javax.swing.JTable tabla;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JPanel panelPrueba;
     // End of variables declaration//GEN-END:variables
+    private javax.swing.JTable tabla;
+
+    public void consumir() {
+        try {
+
+            URL url = new URL("http://localhost:8080/");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+            int responseCode = conn.getResponseCode();
+            if (responseCode != 200) {
+                DefaultTableModel dftm = new DefaultTableModel();
+                throw new RuntimeException("ocurrio un error: " + responseCode);
+            } else {
+                StringBuilder informationQuery = new StringBuilder();
+                Scanner scanner = new Scanner(url.openStream());
+
+                while (scanner.hasNext()) {
+                    informationQuery.append(scanner.nextLine());
+                }
+                scanner.close();
+                String json = informationQuery.toString();
+                System.out.println(json);
+
+                JSONArray arrayJson = new JSONArray(json);
+
+                for (int i = 0; i < arrayJson.length(); i++) {
+                    JSONObject posiblequery = arrayJson.getJSONObject(i);
+                    for (Object object : arrayJson) {
+                        String nombre = posiblequery.getString("nombre");
+
+                        
+                        String descripcion = posiblequery.getString("descripcion");
+                        String query = posiblequery.getString("query");
+                        String fecha = posiblequery.getString("fecha");
+                        fecha =fecha.replace("T", "   ");
+                        Query que = new Query(null, nombre, descripcion, query,null);
+
+//                        LNombre.setText(que.getNombre());
+//                        LDescripcion.setText(que.getDescripcion());
+//                        LFecha.setText(fecha);
+                        jTextPane1.setText(nombre + "\n"
+                                + descripcion + "\n"
+                                + fecha + "\n"
+                        );
+                    }
+
+//                    int id = posiblequery.getInt("id_query");
+//                    String nombre =posiblequery.getString("nombre");
+//                    String descripcion =posiblequery.getString("descripcion");
+//                    String query =posiblequery.getString("query");
+//                    String fecha =posiblequery.getString("fecha");
+//                    Query q = new Query(id, nombre, descripcion, query, fecha);
+//                    
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public void eliminar_id() {
         //id
@@ -345,5 +337,5 @@ public class PReporteador extends javax.swing.JPanel {
             }
         }
     }
-    
+
 }
